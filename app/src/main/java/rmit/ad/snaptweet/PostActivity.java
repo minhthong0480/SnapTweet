@@ -39,7 +39,9 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.Date;
 
-public class PostActivity extends AppCompatActivity {
+public class
+
+PostActivity extends AppCompatActivity {
 
     Uri imageUri;
     String myUrl = "";
