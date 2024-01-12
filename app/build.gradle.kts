@@ -48,7 +48,6 @@ dependencies {
     implementation("de.hdodenhof:circleimageview:2.2.0")
     implementation("com.github.bumptech.glide:glide:4.14.2")
     implementation("com.vanniktech:android-image-cropper:4.5.0")
-    implementation("com.canhub.cropper:cropper:2.8.0") // Use the latest version
 
 
     implementation("com.google.firebase:firebase-storage:20.3.0")
