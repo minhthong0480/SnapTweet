@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "905041461069",
+    "project_id": "snaptweet-52229",
+    "storage_bucket": "snaptweet-52229.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:905041461069:android:afa299ee8be1752fd2c104",
+        "android_client_info": {
+          "package_name": "rmit.ad.snaptweet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8ul6As2ZTorad3LuYMOLyJiRk7BkYh4M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
