@@ -2,6 +2,7 @@ package rmit.ad.snaptweet;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -28,6 +29,13 @@ import com.canhub.cropper.CropImageContract;
 import com.canhub.cropper.CropImageContractOptions;
 import com.canhub.cropper.CropImageOptions;
 import com.canhub.cropper.CropImageView;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
@@ -38,6 +46,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.Date;
+import java.util.HashMap;
 
 public class PostActivity extends AppCompatActivity {
 
@@ -46,7 +55,7 @@ public class PostActivity extends AppCompatActivity {
     StorageTask uploadTask;
     StorageReference storageReference;
 
-    ImageView close, image_added;
+    ImageView close, image_added, imageView;
     TextView post;
     EditText description;
 
@@ -54,6 +63,8 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+
+        imageView = findViewById(R.id.image_added);
 
         close = findViewById(R.id.close);
         image_added = findViewById(R.id.image_added);
@@ -98,6 +109,7 @@ public class PostActivity extends AppCompatActivity {
 
     ActivityResultLauncher<CropImageContractOptions> cropImage = registerForActivityResult(new CropImageContract(), result -> {
         if (result.isSuccessful()) {
+            imageUri = result.getUriContent();
             Bitmap cropped = BitmapFactory.decodeFile(result.getUriFilePath(getApplicationContext(), true));
             saveCroppedImage(cropped);
         }
@@ -110,9 +122,11 @@ public class PostActivity extends AppCompatActivity {
 
     private void launchImageCropper(Uri uri) {
         CropImageOptions cropImageOptions = new CropImageOptions();
-        cropImageOptions.imageSourceIncludeGallery = false;
+        cropImageOptions.imageSourceIncludeGallery = true;
         cropImageOptions.imageSourceIncludeCamera = true;
         CropImageContractOptions cropImageContractOptions = new CropImageContractOptions(uri, cropImageOptions);
+
+        // Launch the image cropper
         cropImage.launch(cropImageContractOptions);
     }
 
@@ -154,6 +168,7 @@ public class PostActivity extends AppCompatActivity {
         } catch (Exception e) {
             showFailureMessage();
         }
+        imageView.setImageBitmap(bitmap);
     }
     private void showFailureMessage() {
         Toast.makeText(getApplicationContext(), "Cropped image not saved something went wrong", Toast.LENGTH_LONG).show();
@@ -175,7 +190,53 @@ public class PostActivity extends AppCompatActivity {
         progressDialog.show();
 
         if (imageUri != null) {
-            // Your upload logic goes here
+            StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
+
+            uploadTask = fileReference.putFile(imageUri);
+            uploadTask.continueWithTask(new Continuation() {
+                @Override
+                public Object then(@NonNull Task task) throws Exception {
+                    if(!task.isSuccessful()){
+                        throw task.getException();
+                    }
+
+                    return fileReference.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if(task.isSuccessful()){
+                        Uri downloadUri = task.getResult();
+                        myUrl = downloadUri.toString();
+
+                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
+                        String postid = reference.push().getKey();
+
+                        HashMap<String, Object> hashMap = new HashMap<>();
+
+                        hashMap.put("postid", postid);
+                        hashMap.put("postimage", myUrl);
+                        hashMap.put("description", description.getText().toString());
+                        hashMap.put("publisher", FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+                        reference.child(postid).setValue(hashMap);
+
+                        progressDialog.dismiss();
+                        startActivity(new Intent(PostActivity.this, MainActivity.class));
+                        finish();
+                    } else {
+                        Toast.makeText(PostActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(PostActivity.this, ""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            progressDialog.dismiss();
+            Toast.makeText(PostActivity.this, "No Image", Toast.LENGTH_SHORT).show();
         }
     }
 }
