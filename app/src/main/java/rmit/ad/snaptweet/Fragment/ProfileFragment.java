@@ -7,6 +7,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +28,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import rmit.ad.snaptweet.Adapter.MyPhotoAdapter;
 import rmit.ad.snaptweet.Model.PostModel;
 import rmit.ad.snaptweet.Model.User;
 import rmit.ad.snaptweet.R;
@@ -34,6 +42,9 @@ public class ProfileFragment extends Fragment {
     ImageView image_profile, options;
     TextView posts, followers, following, fullname, bio, username;
     Button edit_profile;
+    RecyclerView recyclerView;
+    MyPhotoAdapter myPhotoAdapter;
+    List<PostModel> postList;
     FirebaseUser firebaseUser;
     String profileid;
     ImageButton my_photos, saved_photos;
@@ -62,9 +73,18 @@ public class ProfileFragment extends Fragment {
         my_photos = view.findViewById(R.id.my_photos);
         saved_photos = view.findViewById(R.id.saved_photos);
 
+        recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new GridLayoutManager(getContext(), 3);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        postList = new ArrayList<>();
+        myPhotoAdapter = new MyPhotoAdapter(getContext(), postList);
+        recyclerView.setAdapter(myPhotoAdapter);
+
         userInfo();
         getFollowers();
         getNrPosts();
+        myPhotos();
 
         if (profileid.equals(firebaseUser.getUid())) {
             edit_profile.setText("Edit Profile");
@@ -186,12 +206,36 @@ public class ProfileFragment extends Fragment {
                 int i = 0;
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     PostModel post = dataSnapshot.getValue(PostModel.class);
-                    if (post.getUserId().equals(profileid)) {
+                    if (post.getPublisher().equals(profileid)) {
                         i++;
                     }
                 }
 
                 posts.setText(""+i);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void myPhotos() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                postList.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    PostModel post = dataSnapshot.getValue(PostModel.class);
+                    if (post.getPublisher().equals(profileid)) {
+                        postList.add(post);
+                    }
+                }
+                Collections.reverse(postList);
+                myPhotoAdapter.notifyDataSetChanged();
             }
 
             @Override
