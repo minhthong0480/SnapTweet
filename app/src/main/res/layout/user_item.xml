@@ -45,12 +45,12 @@
         android:layout_alignParentEnd="true" />
 
     <Button
-        android:id="@+id/btn_send"
+        android:id="@+id/btn_chat"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_toStartOf="@id/btn_follow"
         android:layout_centerVertical="true"
         android:textColor="@color/black"
-        android:background="@drawable/icon_send" />
+        android:background="@drawable/icon_chat" />
 
 </RelativeLayout>

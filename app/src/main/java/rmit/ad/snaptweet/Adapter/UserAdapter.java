@@ -1,7 +1,11 @@
 package rmit.ad.snaptweet.Adapter;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import rmit.ad.snaptweet.ChatActivity;
 import rmit.ad.snaptweet.Fragment.ProfileFragment;
 import rmit.ad.snaptweet.Model.User;
 import rmit.ad.snaptweet.R;
@@ -32,11 +37,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
     private Context mContext;
     private List<User> mUsers;
     private FirebaseUser firebaseUser;
+    
 
     public UserAdapter(Context mContext, List<User> mUser) {
         this.mContext = mContext;
         this.mUsers = mUser;
+        this.listener = listener;
     }
+
+    public interface OnItemClickListener {
+        void onItemClick(String userId);
+    }
+    private OnItemClickListener listener;
 
     @NonNull
     @Override
@@ -62,6 +74,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
             viewHolder.btn_follow.setVisibility(View.GONE);
         }
 
+
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,7 +84,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
 
                 ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
             }
+
+
         });
+
 
         viewHolder.btn_follow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +105,15 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
                 }
             }
         });
+
+        viewHolder.btn_chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(listener != null) {
+                    listener.onItemClick(user.getId());
+                }
+            }
+        });
     }
 
     @Override
@@ -100,7 +125,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
         public TextView username;
         public TextView fullname;
         public CircleImageView image_profile;
-        public Button btn_follow;
+        public Button btn_follow, btn_chat;
+
         public ViewHolder(@NonNull View itemView){
             super(itemView);
 
@@ -108,6 +134,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
             fullname = itemView.findViewById(R.id.fullname);
             image_profile = itemView.findViewById(R.id.image_profile);
             btn_follow = itemView.findViewById(R.id.btn_follow);
+            btn_chat = itemView.findViewById(R.id.btn_chat);
         }
     }
 
@@ -130,4 +157,5 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
             }
         });
     }
-}
+
+    }
