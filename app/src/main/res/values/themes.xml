@@ -12,7 +12,14 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+<!--        <item name="windowActionBar">false</item>-->
+<!--        <item name="windowNoTitle">true</item>-->
+    </style>
+
+    <!-- Theme for PostActivity -->
+    <style name="CommentActivityTheme" parent="Theme.SnapTweet">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <!-- Add any other specific style attributes for PostActivity -->
     </style>
 </resources>
