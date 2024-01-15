@@ -1,11 +1,7 @@
 package rmit.ad.snaptweet.Adapter;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,18 +24,17 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import rmit.ad.snaptweet.ChatActivity;
 import rmit.ad.snaptweet.Fragment.ProfileFragment;
-import rmit.ad.snaptweet.Model.User;
+import rmit.ad.snaptweet.Model.UserModel;
 import rmit.ad.snaptweet.R;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
     private Context mContext;
-    private List<User> mUsers;
+    private List<UserModel> mUsers;
     private FirebaseUser firebaseUser;
     
 
-    public UserAdapter(Context mContext, List<User> mUser) {
+    public UserAdapter(Context mContext, List<UserModel> mUser) {
         this.mContext = mContext;
         this.mUsers = mUser;
         this.listener = listener;
@@ -61,7 +56,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        final User user = mUsers.get(i);
+        final UserModel user = mUsers.get(i);
 
         viewHolder.btn_follow.setVisibility(View.VISIBLE);
 

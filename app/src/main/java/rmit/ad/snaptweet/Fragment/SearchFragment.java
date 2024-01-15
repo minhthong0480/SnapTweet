@@ -1,7 +1,5 @@
 package rmit.ad.snaptweet.Fragment;
 
-import static android.content.ContentValues.TAG;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,21 +20,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import rmit.ad.snaptweet.Adapter.UserAdapter;
-import rmit.ad.snaptweet.Model.User;
+import rmit.ad.snaptweet.Model.UserModel;
 import rmit.ad.snaptweet.R;
 
 public class SearchFragment extends Fragment {
     private RecyclerView recyclerView;
     private UserAdapter userAdapter;
-    private List<User> mUsers;
+    private List<UserModel> mUsers;
 
     EditText search_bar;
     @Override
@@ -87,7 +81,7 @@ public class SearchFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mUsers.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    User user = snapshot.getValue(User.class);
+                    UserModel user = snapshot.getValue(UserModel.class);
                     mUsers.add(user);
                 }
 
@@ -139,7 +133,7 @@ public class SearchFragment extends Fragment {
                 if(search_bar.getText().toString().equals((""))){
                     mUsers.clear();
                     for (DataSnapshot snapshot : datasnapshot.getChildren()){
-                        User user = snapshot.getValue(User.class);
+                        UserModel user = snapshot.getValue(UserModel.class);
                         mUsers.add(user);
                     }
 
