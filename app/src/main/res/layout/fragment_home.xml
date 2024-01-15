@@ -12,14 +12,4 @@
         android:text="Home"
         android:textSize="24sp" />
 
-    <!-- Button for Logout -->
-    <Button
-        android:id="@+id/logoutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LOGOUT"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="40dp"/>
-
 </FrameLayout>

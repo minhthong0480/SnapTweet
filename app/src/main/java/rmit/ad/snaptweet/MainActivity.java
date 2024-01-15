@@ -2,6 +2,7 @@ package rmit.ad.snaptweet;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
     Fragment selectFragment = null;
-    Button logout;
+    Button logoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,26 +32,28 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectListioner);
+        bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectListener);
 
         // Set the default fragment when the activity is created
         selectFragment = new HomeFragment();
         loadFragment();
 
-//        logout = findViewById(R.id.logoutButton);
-//        logout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                FirebaseAuth.getInstance().signOut();
-//                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-//                finish();
-//            }
-//        });
+        logoutButton = findViewById(R.id.logoutButton); // Initialize the logout button
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Logout logic
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                finish();
+            }
+        });
+
     }
 
 
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectListioner =
+    private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
 
                 @Override

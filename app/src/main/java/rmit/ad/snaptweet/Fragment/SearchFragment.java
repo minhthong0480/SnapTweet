@@ -101,35 +101,6 @@ public class SearchFragment extends Fragment {
         });
     }
 
-//    private void searchUser(String s) {
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//
-//        // Assuming your collection is named "Users" in Firestore
-//        CollectionReference usersCollection = db.collection("Users");
-//
-//        // Convert the search string to lowercase for case-insensitive search
-//        String searchQuery = s.toLowerCase();
-//
-//        // Perform a case-insensitive search on the "username" field
-//        Query query = usersCollection
-//                .whereGreaterThanOrEqualTo("username", searchQuery)
-//                .whereLessThanOrEqualTo("username", searchQuery + "\uf8ff");
-//
-//        query.get().addOnCompleteListener(task -> {
-//            if (task.isSuccessful()) {
-//                mUsers.clear();
-//                for (QueryDocumentSnapshot document : task.getResult()) {
-//                    // Convert the document snapshot to a User object
-//                    User user = document.toObject(User.class);
-//                    mUsers.add(user);
-//                }
-//                userAdapter.notifyDataSetChanged();
-//            } else {
-//                Log.e(TAG, "Error getting documents: ", task.getException());
-//            }
-//        });
-//    }
-
 
     private void readUsers(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
