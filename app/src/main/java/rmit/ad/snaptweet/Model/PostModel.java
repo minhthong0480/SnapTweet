@@ -2,33 +2,33 @@ package rmit.ad.snaptweet.Model;
 
 
 public class PostModel {
-    String id, title, description, userId;
+    String postid, postimage, description, publisher;
 
     public PostModel() {
 
     }
 
-    public PostModel(String id, String title, String description, String userId) {
-        this.id = id;
-        this.title = title;
+    public PostModel(String postid, String postimage, String description, String publisher) {
+        this.postid = postid;
+        this.postimage = postimage;
         this.description = description;
-        this.userId = userId;
+        this.publisher = publisher;
     }
 
-    public String getId() {
-        return id;
+    public String getPostid() {
+        return postid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setPostid(String postid) {
+        this.postid = postid;
     }
 
-    public String getTitle() {
-        return title;
+    public String getPostimage() {
+        return postimage;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setPostimage(String postimage) {
+        this.postimage = postimage;
     }
 
     public String getDescription() {
@@ -39,12 +39,12 @@ public class PostModel {
         this.description = description;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getPublisher() {
+        return publisher;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
     }
 }
 

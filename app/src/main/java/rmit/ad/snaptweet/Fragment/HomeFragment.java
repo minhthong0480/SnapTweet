@@ -17,23 +17,11 @@ import rmit.ad.snaptweet.R;
 
 public class HomeFragment extends Fragment {
 
-    private Button logoutButton;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
-        logoutButton = view.findViewById(R.id.logoutButton);
-
-//        logoutButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FirebaseAuth.getInstance().signOut();
-//                startActivity(new Intent(getActivity(), LoginActivity.class));
-//                getActivity().finish();
-//            }
-//        });
 
         return view;
     }
