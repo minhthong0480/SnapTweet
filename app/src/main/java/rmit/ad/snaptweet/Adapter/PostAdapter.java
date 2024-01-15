@@ -1,6 +1,7 @@
 package rmit.ad.snaptweet.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
+import rmit.ad.snaptweet.CommentActivity;
 import rmit.ad.snaptweet.Model.PostModel;
 import rmit.ad.snaptweet.Model.User;
 import rmit.ad.snaptweet.R;
@@ -60,6 +62,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
         publisherInfo(viewHolder.image_profile, viewHolder.username, viewHolder.publisher, post.getPublisher());
         isLiked((post.getPostid()), viewHolder.like);
         numberLikes(viewHolder.likes, post.getPostid());
+        getComments(post.getPostid(), viewHolder.comments);
 
         viewHolder.like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +78,25 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
                             .child(post.getPostid())
                             .child(firebaseUser.getUid()).removeValue();
                 }
+            }
+        });
+        viewHolder.comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, CommentActivity.class);
+                intent.putExtra("postid", post.getPostid());
+                intent.putExtra("publisherid", post.getPublisher());
+                mContext.startActivity(intent);
+            }
+        });
+
+        viewHolder.comments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, CommentActivity.class);
+                intent.putExtra("postid", post.getPostid());
+                intent.putExtra("publisherid", post.getPublisher());
+                mContext.startActivity(intent);
             }
         });
     }
@@ -103,6 +125,23 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             comments = itemView.findViewById(R.id.comments);
 
         }
+    }
+
+    private  void getComments(String postid, TextView comments){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Comment")
+                .child(postid);
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                comments.setText("View All "+dataSnapshot.getChildrenCount() + " Comments");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void isLiked(String postid, ImageView imageView){
