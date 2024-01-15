@@ -31,16 +31,15 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <!-- Other layout elements -->
+
     <Button
         android:id="@+id/logoutButton"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="LOGOUT"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976" />
+        android:layout_gravity="top|end"
+        android:layout_marginBottom="20dp"
+        android:text="Logout"/>
+
 
 </RelativeLayout>

@@ -120,7 +120,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
                 if(dataSnapshot.child(userid).exists()){
                     button.setText("following");
                 } else {
-                    button.setText("following");
+                    button.setText("follow");
                 }
             }
 
