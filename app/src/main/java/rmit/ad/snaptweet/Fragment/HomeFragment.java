@@ -34,6 +34,7 @@ public class HomeFragment extends Fragment {
     private List<PostModel> postLists;
 
     private List<String> followingList;
+    String currentUserId;
 
     @Nullable
     @Override
@@ -47,7 +48,8 @@ public class HomeFragment extends Fragment {
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         postLists = new ArrayList<>();
-        postAdapter = new PostAdapter(getContext(), postLists);
+        currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        postAdapter = new PostAdapter(getContext(), postLists, currentUserId);
         recyclerView.setAdapter(postAdapter);
 
         checkFollowing();
@@ -78,18 +80,19 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void readPost(){
+    private void readPost() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 postLists.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     PostModel post = snapshot.getValue(PostModel.class);
-                    for(String id : followingList){
-                        if(post.getPublisher().equals(id)){
-                            postLists.add(post);
-                        }
+
+                    // Check if the post belongs to the current user or the user they follow
+
+                    if (post.getPublisher().equals(currentUserId) || followingList.contains(post.getPublisher())) {
+                        postLists.add(post);
                     }
                 }
                 postAdapter.notifyDataSetChanged();
@@ -101,4 +104,5 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
 }

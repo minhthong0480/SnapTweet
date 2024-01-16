@@ -1,12 +1,10 @@
 package rmit.ad.snaptweet;
 
-//test first commit branch Thong
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -27,7 +25,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
+import com.bumptech.glide.Glide;
 import com.canhub.cropper.CropImage;
 import com.canhub.cropper.CropImageContract;
 import com.canhub.cropper.CropImageContractOptions;
@@ -38,66 +36,93 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.Date;
 import java.util.HashMap;
 
-public class PostActivity extends AppCompatActivity {
+import rmit.ad.snaptweet.Model.User;
 
-    Uri imageUri;
-    String myUrl = "";
-    StorageTask uploadTask;
-    StorageReference storageReference;
+public class EditProfileActivity extends AppCompatActivity {
 
-    ImageView close, image_added, imageView;
-    TextView post;
-    EditText description;
+    ImageView close, image_profile;
+    TextView save, tv_change;
+    EditText fullname, username, bio;
+
+    FirebaseUser firebaseUser;
+
+    private Uri mImageUri;
+    private StorageTask uploadTask;
+    StorageReference storageRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post);
-
-        imageView = findViewById(R.id.image_added);
+        setContentView(R.layout.activity_edit_profile);
 
         close = findViewById(R.id.close);
-        image_added = findViewById(R.id.image_added);
-        post = findViewById(R.id.post);
-        description = findViewById(R.id.description);
+        image_profile = findViewById(R.id.image_profile);
+        save = findViewById(R.id.save);
+        tv_change = findViewById(R.id.tv_change);
+        fullname = findViewById(R.id.fullname);
+        username = findViewById(R.id.username);
+        bio = findViewById(R.id.bio);
 
-        storageReference = FirebaseStorage.getInstance().getReference("posts");
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        storageRef = FirebaseStorage.getInstance().getReference("uploads");
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                fullname.setText(user.getFullname());
+                username.setText(user.getUsername());
+                bio.setText(user.getBio());
+                Glide.with(getApplicationContext()).load(user.getImageurl()).into(image_profile);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         close.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                startActivity(new Intent(PostActivity.this, MainActivity.class));
+            public void onClick(View v) {
                 finish();
             }
         });
 
-        image_added.setOnClickListener(new View.OnClickListener() {
+        tv_change.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                // Open the image picker when the user clicks on the image view
+            public void onClick(View v) {
                 pickImage();
             }
         });
 
-        post.setOnClickListener(new View.OnClickListener() {
+        save.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                updateProfile(fullname.getText().toString(),
+                        username.getText().toString(),
+                        bio.getText().toString());
                 uploadImage();
             }
+
         });
     }
 
@@ -113,7 +138,7 @@ public class PostActivity extends AppCompatActivity {
 
     ActivityResultLauncher<CropImageContractOptions> cropImage = registerForActivityResult(new CropImageContract(), result -> {
         if (result.isSuccessful()) {
-            imageUri = result.getUriContent();
+            mImageUri = result.getUriContent();
             Bitmap cropped = BitmapFactory.decodeFile(result.getUriFilePath(getApplicationContext(), true));
             saveCroppedImage(cropped);
         }
@@ -128,6 +153,7 @@ public class PostActivity extends AppCompatActivity {
         CropImageOptions cropImageOptions = new CropImageOptions();
         cropImageOptions.imageSourceIncludeGallery = true;
         cropImageOptions.imageSourceIncludeCamera = true;
+        cropImageOptions.cropShape = CropImageView.CropShape.OVAL;
         CropImageContractOptions cropImageContractOptions = new CropImageContractOptions(uri, cropImageOptions);
 
         // Launch the image cropper
@@ -136,7 +162,7 @@ public class PostActivity extends AppCompatActivity {
 
     private void saveCroppedImage(Bitmap bitmap) {
         String root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
-        File myDir = new File(root + "/Cropped Images");
+        File myDir = new File(root + "/Cropped Profile Images");
 
         if (!myDir.exists()) {
             myDir.mkdirs();
@@ -172,7 +198,7 @@ public class PostActivity extends AppCompatActivity {
         } catch (Exception e) {
             showFailureMessage();
         }
-        imageView.setImageBitmap(bitmap);
+        image_profile.setImageBitmap(bitmap);
     }
     private void showFailureMessage() {
         Toast.makeText(getApplicationContext(), "Cropped image not saved something went wrong", Toast.LENGTH_LONG).show();
@@ -188,59 +214,62 @@ public class PostActivity extends AppCompatActivity {
         return mime.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
+    private void updateProfile(String fullname, String username, String bio) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("fullname", fullname);
+        hashMap.put("username", username);
+        hashMap.put("bio", bio);
+
+        reference.updateChildren(hashMap);
+    }
+
     private void uploadImage() {
-        ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Posting");
-        progressDialog.show();
+        ProgressDialog pd = new ProgressDialog(this);
+        pd.setMessage("Uploading");
+        pd.show();
 
-        if (imageUri != null) {
-            StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
+        if (mImageUri != null) {
+            StorageReference filereference = storageRef.child(System.currentTimeMillis()
+            +"."+getFileExtension(mImageUri));
 
-            uploadTask = fileReference.putFile(imageUri);
+            uploadTask = filereference.putFile(mImageUri);
             uploadTask.continueWithTask(new Continuation() {
                 @Override
                 public Object then(@NonNull Task task) throws Exception {
-                    if(!task.isSuccessful()){
+                    if (!task.isSuccessful()) {
                         throw task.getException();
                     }
 
-                    return fileReference.getDownloadUrl();
+                    return filereference.getDownloadUrl();
                 }
             }).addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
-                    if(task.isSuccessful()){
+                    if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
-                        myUrl = downloadUri.toString();
+                        String myUrl = downloadUri.toString();
 
-                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
-                        String postid = reference.push().getKey();
-
+                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
                         HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("imageurl", ""+myUrl);
 
-                        hashMap.put("postid", postid);
-                        hashMap.put("postimage", myUrl);
-                        hashMap.put("description", description.getText().toString());
-                        hashMap.put("publisher", FirebaseAuth.getInstance().getCurrentUser().getUid());
-
-                        reference.child(postid).setValue(hashMap);
-
-                        progressDialog.dismiss();
-                        startActivity(new Intent(PostActivity.this, MainActivity.class));
-                        finish();
+                        reference.updateChildren(hashMap);
+                        pd.dismiss();
                     } else {
-                        Toast.makeText(PostActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditProfileActivity.this, "Failed", Toast.LENGTH_SHORT).show();
                     }
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(PostActivity.this, ""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         } else {
-            progressDialog.dismiss();
-            Toast.makeText(PostActivity.this, "No Image", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show();
         }
     }
+
 }

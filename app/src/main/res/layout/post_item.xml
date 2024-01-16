@@ -56,9 +56,19 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:id="@+id/save"
-                android:src="@drawable/ic_save"
+                android:id="@+id/delete_post"
+                android:src="@drawable/ic_delete"
                 android:layout_alignParentEnd="true"/>
+
+<!--            <ImageView-->
+<!--                android:id="@+id/delete_post"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@drawable/ic_delete"-->
+<!--                android:layout_toEndOf="@+id/like"-->
+<!--                android:clickable="true"-->
+<!--                android:focusable="true" />-->
+
 
         </RelativeLayout>
 
