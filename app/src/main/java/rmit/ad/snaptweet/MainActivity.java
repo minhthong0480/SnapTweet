@@ -39,14 +39,11 @@ public class MainActivity extends AppCompatActivity {
         loadFragment();
 
         logoutButton = findViewById(R.id.logoutButton); // Initialize the logout button
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Logout logic
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                finish();
-            }
+        logoutButton.setOnClickListener(view -> {
+            // Logout logic
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+            finish();
         });
 
     }
@@ -70,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
                         selectFragment = new ProfileFragment();
                     } else if (itemId == R.id.nav_market) {
                         selectFragment = new MarketFragment();
+                        startActivity(new Intent(MainActivity.this, ProductDetailsActivity.class));
+                        return true;
+
                     }
 
                     // Load the selected fragment
