@@ -14,4 +14,8 @@
     <string name="logout">Logout</string>
     <string name="check_new_orders">Check New Orders</string>
     <string name="todo">TODO</string>
+    <string name="add_product">Add Product</string>
+    <string name="product_description">Product Description...</string>
+    <string name="product_name">Product Name...</string>
+    <string name="product_price">Product Price...</string>
 </resources>
