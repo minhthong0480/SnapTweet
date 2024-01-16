@@ -60,6 +60,15 @@
                 android:src="@drawable/ic_save"
                 android:layout_alignParentEnd="true"/>
 
+            <ImageView
+                android:id="@+id/delete_post"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_delete"
+                android:clickable="true"
+                android:focusable="true" />
+
+
         </RelativeLayout>
 
         <TextView

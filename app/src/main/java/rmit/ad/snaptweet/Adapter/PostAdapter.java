@@ -1,17 +1,22 @@
 package rmit.ad.snaptweet.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -66,7 +71,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
         numberLikes(viewHolder.likes, post.getPostid());
         getComments(post.getPostid(), viewHolder.comments);
 
-
+        // Add a click listener for the delete button
+        viewHolder.delete_post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deletePost(post.getPostid());
+            }
+        });
         viewHolder.like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,6 +125,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     public class ViewHolder extends RecyclerView.ViewHolder{
         public ImageView image_profile, post_image, like, comment, save;
         public TextView username, likes, publisher, description, comments;
+        public ImageView delete_post;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -176,6 +188,35 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     }
 
 
+    private void deletePost(String postId) {
+        // Confirmation dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setTitle("Confirm Deletion");
+        builder.setMessage("Are you sure you want to delete this post?");
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Get a reference to the "Posts" node in the database
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts").child(postId);
+
+                // Remove the post from the database
+                reference.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            // Post deleted successfully
+                            Toast.makeText(mContext, "Post deleted", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Failed to delete post
+                            Toast.makeText(mContext, "Failed to delete post", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
+        builder.setNegativeButton("Cancel", null);
+        builder.show();
+    }
 
 
     private void numberLikes(TextView likes, String postid){
