@@ -17,9 +17,12 @@
         android:theme="@style/Theme.SnapTweet"
         tools:targetApi="31">
         <activity
-            android:name=".CommentActivity"
-            android:theme="@style/CommentActivityTheme"
+            android:name=".EditProfileActivity"
             android:exported="false" />
+        <activity
+            android:name=".CommentActivity"
+            android:exported="false"
+            android:theme="@style/CommentActivityTheme" />
         <activity
             android:name=".StartActivity"
             android:exported="true">
@@ -43,7 +46,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>

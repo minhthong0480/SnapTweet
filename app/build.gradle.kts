@@ -50,6 +50,7 @@ dependencies {
     implementation("com.vanniktech:android-image-cropper:4.5.0")
 
 
+
     implementation("com.google.firebase:firebase-storage:20.3.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
