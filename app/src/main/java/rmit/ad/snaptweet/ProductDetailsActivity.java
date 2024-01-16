@@ -48,7 +48,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
 
         tShirts.setOnClickListener(view -> {
-            Intent intent = new Intent(ProductDetailsActivity.this, ProductDetailsActivity.class);
+            Intent intent = new Intent(ProductDetailsActivity.this, AddNewProductActivity.class);
             intent.putExtra("category", "tShirts");
             startActivity(intent);
         });
