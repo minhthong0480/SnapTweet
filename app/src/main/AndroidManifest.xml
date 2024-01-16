@@ -19,15 +19,7 @@
         <activity
             android:name=".ProductDetailsActivity"
             android:exported="false" />
-        <activity
-            android:name=".ProductDetailsActivity2"
-            android:exported="false" />
-        <activity
-            android:name=".Model.ProductDetailsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Model.ProductsDetIailsActivity"
-            android:exported="false" />
+
         <activity
             android:name=".StartActivity"
             android:exported="true">

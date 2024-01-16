@@ -1,97 +1,68 @@
 package rmit.ad.snaptweet;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
-
-
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.view.View;
-import android.content.Intent;
 
-
-
-import rmit.ad.snaptweet.R;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class ProductDetailsActivity extends AppCompatActivity {
-    private ImageView tShirts, sportsTShirts, femaleDresses, sweathers;
-    private ImageView glasses, hatsCaps, walletsBagsPurses, shoes;
-    private ImageView headPhonesHandFree, Laptops, watches, mobilePhones;
-    private Button LogoutBtn, CheckOrdersBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
 
-        LogoutBtn = (Button) findViewById(R.id.admin_logout_btn);
-        LogoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent= new Intent(ProductDetailsActivity.this,MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                finish();
-            }
+        Button logoutBtn = (Button) findViewById(R.id.admin_logout_btn);
+        logoutBtn.setOnClickListener(view -> {
+            Intent intent= new Intent(ProductDetailsActivity.this,MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
         });
-        CheckOrdersBtn = (Button) findViewById(R.id.check_orders_btn);
+        Button checkOrdersBtn = (Button) findViewById(R.id.check_orders_btn);
 
 
-        CheckOrdersBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent= new Intent(ProductDetailsActivity.this,ProductDetailsActivity.class);
-                startActivity(intent);
-            }
+        checkOrdersBtn.setOnClickListener(view -> {
+            Intent intent= new Intent(ProductDetailsActivity.this,ProductDetailsActivity.class);
+            startActivity(intent);
         });
 
 
+        ImageView tShirts = (ImageView) findViewById(R.id.t_shirts);
+        ImageView sportsTShirts = (ImageView) findViewById(R.id.sports_t_shirts);
+        ImageView femaleDresses = (ImageView) findViewById(R.id.female_dresses);
+        ImageView sweathers = (ImageView) findViewById(R.id.sweathers);
 
-        tShirts = (ImageView) findViewById(R.id.t_shirts);
-        sportsTShirts = (ImageView) findViewById(R.id.sports_t_shirts);
-        femaleDresses = (ImageView) findViewById(R.id.female_dresses);
-        sweathers = (ImageView) findViewById(R.id.sweathers);
+        ImageView glasses = (ImageView) findViewById(R.id.glasses);
+        ImageView hatsCaps = (ImageView) findViewById(R.id.hats_caps);
+        ImageView walletsBagsPurses = (ImageView) findViewById(R.id.purses_bags_wallets);
+        ImageView shoes = (ImageView) findViewById(R.id.shoes);
 
-        glasses = (ImageView) findViewById(R.id.glasses);
-        hatsCaps = (ImageView) findViewById(R.id.hats_caps);
-        walletsBagsPurses = (ImageView) findViewById(R.id.purses_bags_wallets);
-        shoes = (ImageView) findViewById(R.id.shoes);
-
-        headPhonesHandFree = (ImageView) findViewById(R.id.headphones_handfree);
-        Laptops = (ImageView) findViewById(R.id.laptop_pc);
-        watches = (ImageView) findViewById(R.id.watches);
-        mobilePhones = (ImageView) findViewById(R.id.mobilephones);
+        ImageView headPhonesHandFree = (ImageView) findViewById(R.id.headphones_handfree);
+        ImageView laptops = (ImageView) findViewById(R.id.laptop_pc);
+        ImageView watches = (ImageView) findViewById(R.id.watches);
+        ImageView mobilePhones = (ImageView) findViewById(R.id.mobilephones);
 
 
-        tShirts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                Intent intent = new Intent(ProductDetailsActivity.this, ProductDetailsActivity.class);
-                intent.putExtra("category", "tShirts");
-                startActivity(intent);
-            }
+        tShirts.setOnClickListener(view -> {
+            Intent intent = new Intent(ProductDetailsActivity.this, ProductDetailsActivity.class);
+            intent.putExtra("category", "tShirts");
+            startActivity(intent);
         });
-        sportsTShirts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                Intent intent = new Intent(ProductDetailsActivity.this, ProductDetailsActivity.class);
-                intent.putExtra("category", "Sports tShirts");
-                startActivity(intent);
-            }
+        sportsTShirts.setOnClickListener(view -> {
+            Intent intent = new Intent(ProductDetailsActivity.this, ProductDetailsActivity.class);
+            intent.putExtra("category", "Sports tShirts");
+            startActivity(intent);
         });
 
 
-        femaleDresses.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                Intent intent = new Intent(ProductDetailsActivity.this, ProductDetailsActivity.class);
-                intent.putExtra("category", "Female Dresses");
-                startActivity(intent);
-            }
+        femaleDresses.setOnClickListener(view -> {
+            Intent intent = new Intent(ProductDetailsActivity.this, ProductDetailsActivity.class);
+            intent.putExtra("category", "Female Dresses");
+            startActivity(intent);
         });
 
 
@@ -163,7 +134,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         });
 
 
-        Laptops.setOnClickListener(new View.OnClickListener() {
+        laptops.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
