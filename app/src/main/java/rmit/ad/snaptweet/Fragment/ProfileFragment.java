@@ -35,6 +35,7 @@ import java.util.List;
 
 import rmit.ad.snaptweet.Adapter.MyPhotoAdapter;
 import rmit.ad.snaptweet.EditProfileActivity;
+import rmit.ad.snaptweet.LoginActivity;
 import rmit.ad.snaptweet.Model.PostModel;
 import rmit.ad.snaptweet.Model.User;
 import rmit.ad.snaptweet.R;
@@ -49,7 +50,7 @@ public class ProfileFragment extends Fragment {
     List<PostModel> postList;
     FirebaseUser firebaseUser;
     String profileid;
-    ImageButton my_photos, saved_photos;
+    ImageButton my_photos, saved_photos, logoutBtn;
 
 
 
@@ -64,7 +65,7 @@ public class ProfileFragment extends Fragment {
         profileid = prefs.getString("profileid", FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         image_profile = view.findViewById(R.id.image_profile);
-        options = view.findViewById(R.id.options);
+//        options = view.findViewById(R.id.options);
         posts = view.findViewById(R.id.posts);
         followers = view.findViewById(R.id.followers);
         following = view.findViewById(R.id.following);
@@ -94,6 +95,17 @@ public class ProfileFragment extends Fragment {
             checkFollow();
             saved_photos.setVisibility(View.GONE);
         }
+
+        logoutBtn = view.findViewById(R.id.logoutBtn); // Initialize the logout button
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Logout logic
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(requireContext(), LoginActivity.class));
+                requireActivity().finish();
+            }
+        });
 
         edit_profile.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -30,13 +30,21 @@
                     android:id="@+id/username"
                     android:textColor="@color/colorPrimaryDark"/>
 
-                <ImageView
+                <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/options"
-                    android:src="@drawable/ic_options"
+                    android:id="@+id/logoutBtn"
+                    android:src="@drawable/ic_logout"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="10dp"/>
+
+<!--                <ImageView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:id="@+id/options"-->
+<!--                    android:src="@drawable/ic_options"-->
+<!--                    android:layout_alignParentEnd="true"-->
+<!--                    android:layout_marginEnd="10dp"/>-->
                 
             </RelativeLayout>
 

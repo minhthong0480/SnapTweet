@@ -59,20 +59,6 @@ public class MainActivity extends AppCompatActivity {
         // Set the default fragment when the activity is created
         selectFragment = new HomeFragment();
         loadFragment();
-
-        logoutBtn = findViewById(R.id.logoutBtn); // Initialize the logout button
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Logout logic
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                finish();
-            }
-        });
-
-
-
     }
 
 
