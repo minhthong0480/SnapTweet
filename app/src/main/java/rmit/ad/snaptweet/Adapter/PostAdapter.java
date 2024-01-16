@@ -123,9 +123,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        public ImageView image_profile, post_image, like, comment, save;
+        public ImageView image_profile, post_image, like, comment, save, delete_post;
         public TextView username, likes, publisher, description, comments;
-        public ImageView delete_post;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -134,7 +133,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             post_image = itemView.findViewById(R.id.post_image);
             like = itemView.findViewById(R.id.like);
             comment = itemView.findViewById(R.id.comment);
-            save = itemView.findViewById(R.id.save);
+//            save = itemView.findViewById(R.id.save);
             username = itemView.findViewById(R.id.username);
             likes = itemView.findViewById(R.id.likes);
             publisher = itemView.findViewById(R.id.publisher);
