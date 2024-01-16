@@ -7,11 +7,13 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.widget.AppCompatImageButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     Fragment selectFragment = null;
     Button logoutButton;
+    ImageButton logoutBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
         selectFragment = new HomeFragment();
         loadFragment();
 
-        logoutButton = findViewById(R.id.logoutButton); // Initialize the logout button
-        logoutButton.setOnClickListener(new View.OnClickListener() {
+        logoutBtn = findViewById(R.id.logoutBtn); // Initialize the logout button
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Logout logic

@@ -33,13 +33,23 @@
 
     <!-- Other layout elements -->
 
-    <Button
-        android:id="@+id/logoutButton"
+<!--    <Button-->
+<!--        android:id="@+id/logoutButton"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="top|end"-->
+<!--        android:layout_marginBottom="20dp"-->
+<!--        android:text="Logout"/>-->
+
+    <ImageButton
+        android:id="@+id/logoutBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|end"
-        android:layout_marginBottom="20dp"
-        android:text="Logout"/>
+        android:layout_margin="20dp"
+        android:src="@drawable/ic_logout"
+        android:background="?android:attr/selectableItemBackground"
+        android:contentDescription="Logout"/>
 
 
 </RelativeLayout>
