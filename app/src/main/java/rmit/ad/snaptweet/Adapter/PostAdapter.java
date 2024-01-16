@@ -33,10 +33,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     public List<PostModel> mPost;
 
     private FirebaseUser firebaseUser;
+    private String currentUserId;
 
-    public PostAdapter(Context mContext, List<PostModel> mPost) {
+    public PostAdapter(Context mContext, List<PostModel> mPost, String currentUserId) {
         this.mContext = mContext;
         this.mPost = mPost;
+        this.currentUserId = currentUserId;
     }
 
     @NonNull
@@ -63,6 +65,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
         isLiked((post.getPostid()), viewHolder.like);
         numberLikes(viewHolder.likes, post.getPostid());
         getComments(post.getPostid(), viewHolder.comments);
+
 
         viewHolder.like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,6 +174,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             }
         });
     }
+
+
 
 
     private void numberLikes(TextView likes, String postid){
