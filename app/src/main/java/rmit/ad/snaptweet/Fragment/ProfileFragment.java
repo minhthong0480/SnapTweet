@@ -1,6 +1,7 @@
 package rmit.ad.snaptweet.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -33,6 +34,7 @@ import java.util.Collections;
 import java.util.List;
 
 import rmit.ad.snaptweet.Adapter.MyPhotoAdapter;
+import rmit.ad.snaptweet.EditProfileActivity;
 import rmit.ad.snaptweet.Model.PostModel;
 import rmit.ad.snaptweet.Model.User;
 import rmit.ad.snaptweet.R;
@@ -99,7 +101,7 @@ public class ProfileFragment extends Fragment {
                 String btn = edit_profile.getText().toString();
 
                 if (btn.equals("Edit Profile")){
-                    //Go to editprofile
+                    startActivity(new Intent(getContext(), EditProfileActivity.class));
                 } else if (btn.equals("follow")) {
 
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid())
