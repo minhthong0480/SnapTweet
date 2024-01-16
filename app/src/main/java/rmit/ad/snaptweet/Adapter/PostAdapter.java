@@ -71,6 +71,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
         numberLikes(viewHolder.likes, post.getPostid());
         getComments(post.getPostid(), viewHolder.comments);
 
+
         // Add a click listener for the delete button
         viewHolder.delete_post.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,6 +140,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             publisher = itemView.findViewById(R.id.publisher);
             description = itemView.findViewById(R.id.description);
             comments = itemView.findViewById(R.id.comments);
+            delete_post = itemView.findViewById(R.id.delete_post);
 
         }
     }
