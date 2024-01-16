@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         // Set the default fragment when the activity is created
         selectFragment = new HomeFragment();
         loadFragment();
+
     }
 
 
@@ -80,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
                         selectFragment = new ProfileFragment();
                     } else if (itemId == R.id.nav_market) {
                         selectFragment = new MarketFragment();
+                        startActivity(new Intent(MainActivity.this, ProductDetailsActivity.class));
+                        return true;
+
                     }
 
                     // Load the selected fragment
