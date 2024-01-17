@@ -1,25 +1,17 @@
 package rmit.ad.snaptweet;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-
-
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.widget.EditText;
-
-import android.view.View;
+import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
-import rmit.ad.snaptweet.Model.Products;
-import rmit.ad.snaptweet.Prevalent.Prevalent;
-
-import rmit.ad.snaptweet.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -33,8 +25,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import rmit.ad.snaptweet.Model.Products;
+import rmit.ad.snaptweet.Prevalent.Prevalent;
+
 public class OrderActivity extends AppCompatActivity {
-    private Button addToCartButton;
     private ImageView productImage;
     private EditText quantityInput;
     private TextView productPrice, productDescription, productName;
@@ -47,7 +41,7 @@ public class OrderActivity extends AppCompatActivity {
 
         productID = getIntent().getStringExtra("pid");
 
-        addToCartButton = findViewById(R.id.pd_add_to_cart_button);
+        Button addToCartButton = findViewById(R.id.pd_add_to_cart_button);
         quantityInput = findViewById(R.id.quantity_input);
         productImage = findViewById(R.id.product_image_details);
         productName = findViewById(R.id.product_name_details);
@@ -56,14 +50,11 @@ public class OrderActivity extends AppCompatActivity {
 
         getProductDetails(productID);
 
-        addToCartButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (state.equals("Order Placed") || state.equals("Order Shipped")) {
-                    Toast.makeText(OrderActivity.this, "You can add Purchase more product, once your order is shipped or confirmed", Toast.LENGTH_LONG).show();
-                } else {
-                    addingToCartList();
-                }
+        addToCartButton.setOnClickListener(view -> {
+            if (state.equals("Order Placed") || state.equals("Order Shipped")) {
+                Toast.makeText(OrderActivity.this, "You can add Purchase more product, once your order is shipped or confirmed", Toast.LENGTH_LONG).show();
+            } else {
+                addingToCartList();
             }
         });
     }
@@ -71,9 +62,9 @@ public class OrderActivity extends AppCompatActivity {
     private void addingToCartList() {
         String saveCurrentTime, saveCurrentDate;
         Calendar calForDate = Calendar.getInstance();
-        SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd. yyy");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd. yyy");
         saveCurrentDate = currentDate.format(calForDate.getTime());
-        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
         saveCurrentTime = currentTime.format(calForDate.getTime());
 
         final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
@@ -87,24 +78,21 @@ public class OrderActivity extends AppCompatActivity {
         cartMap.put("discount", "");
 
         cartListRef.child("User view").child(Prevalent.currentOnlineUser.getPhone()).child("Products").child(productID).updateChildren(cartMap)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            cartListRef.child("Admin view").child(Prevalent.currentOnlineUser.getPhone())
-                                    .child("Products").child(productID)
-                                    .updateChildren(cartMap)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                Toast.makeText(OrderActivity.this, "Added to cart List", Toast.LENGTH_SHORT).show();
-                                                Intent intent = new Intent(OrderActivity.this,CartActivity.class);
-                                                startActivity(intent);
-                                            }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        cartListRef.child("Admin view").child(Prevalent.currentOnlineUser.getPhone())
+                                .child("Products").child(productID)
+                                .updateChildren(cartMap)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(OrderActivity.this, "Added to cart List", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(OrderActivity.this,CartActivity.class);
+                                            startActivity(intent);
                                         }
-                                    });
-                        }
+                                    }
+                                });
                     }
                 });
     }
