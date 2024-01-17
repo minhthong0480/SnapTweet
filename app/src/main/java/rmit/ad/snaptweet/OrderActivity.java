@@ -83,14 +83,11 @@ public class OrderActivity extends AppCompatActivity {
                         cartListRef.child("Admin view").child(Prevalent.currentOnlineUser.getPhone())
                                 .child("Products").child(productID)
                                 .updateChildren(cartMap)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            Toast.makeText(OrderActivity.this, "Added to cart List", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(OrderActivity.this,CartActivity.class);
-                                            startActivity(intent);
-                                        }
+                                .addOnCompleteListener(task1 -> {
+                                    if (task1.isSuccessful()) {
+                                        Toast.makeText(OrderActivity.this, "Added to cart List", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(OrderActivity.this, CartActivity.class);
+                                        startActivity(intent);
                                     }
                                 });
                     }
