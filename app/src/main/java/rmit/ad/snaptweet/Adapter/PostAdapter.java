@@ -73,12 +73,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
 
 
         // Add a click listener for the delete button
+        // Add a click listener for the delete button
         viewHolder.delete_post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deletePost(post.getPostid());
+                deletePost(post.getPostid(), post.getPublisher());
             }
         });
+
         viewHolder.like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -189,35 +191,42 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     }
 
 
-    private void deletePost(String postId) {
-        // Confirmation dialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setTitle("Confirm Deletion");
-        builder.setMessage("Are you sure you want to delete this post?");
-        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                // Get a reference to the "Posts" node in the database
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts").child(postId);
+    private void deletePost(String postId, String postPublisherId) {
+        // Check if the current user is the owner of the post
+        if (firebaseUser.getUid().equals(postPublisherId)) {
+            // Confirmation dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            builder.setTitle("Confirm Deletion");
+            builder.setMessage("Are you sure you want to delete this post?");
+            builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    // Get a reference to the "Posts" node in the database
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts").child(postId);
 
-                // Remove the post from the database
-                reference.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            // Post deleted successfully
-                            Toast.makeText(mContext, "Post deleted", Toast.LENGTH_SHORT).show();
-                        } else {
-                            // Failed to delete post
-                            Toast.makeText(mContext, "Failed to delete post", Toast.LENGTH_SHORT).show();
+                    // Remove the post from the database
+                    reference.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                // Post deleted successfully
+                                Toast.makeText(mContext, "Post deleted", Toast.LENGTH_SHORT).show();
+                            } else {
+                                // Failed to delete post
+                                Toast.makeText(mContext, "Failed to delete post", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
-            }
-        });
-        builder.setNegativeButton("Cancel", null);
-        builder.show();
+                    });
+                }
+            });
+            builder.setNegativeButton("Cancel", null);
+            builder.show();
+        } else {
+            // Display a message indicating that the user doesn't have permission
+            Toast.makeText(mContext, "You don't have permission to delete this post", Toast.LENGTH_SHORT).show();
+        }
     }
+
 
 
     private void numberLikes(TextView likes, String postid){
