@@ -104,7 +104,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent(ProductDetailsActivity.this, ddNewProductActivity.class);
+                Intent intent = new Intent(ProductDetailsActivity.this, AddNewProductActivity.class);
                 intent.putExtra("category", "Wallets Bags Purses");
                 startActivity(intent);
             }
@@ -115,7 +115,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent(ProductDetailsActivity.this, ddNewProductActivity.class);
+                Intent intent = new Intent(ProductDetailsActivity.this, AddNewProductActivity.class);
                 intent.putExtra("category", "Shoes");
                 startActivity(intent);
             }

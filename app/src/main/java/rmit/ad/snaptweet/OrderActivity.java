@@ -99,7 +99,7 @@ public class OrderActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
                                                 Toast.makeText(OrderActivity.this, "Added to cart List", Toast.LENGTH_SHORT).show();
-                                                Intent intent = new Intent(OrderActivity.this,AddNewProductActivity.class);
+                                                Intent intent = new Intent(OrderActivity.this,CartActivity.class);
                                                 startActivity(intent);
                                             }
                                         }

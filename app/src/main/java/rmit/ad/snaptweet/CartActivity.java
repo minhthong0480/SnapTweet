@@ -22,8 +22,10 @@ import rmit.ad.snaptweet.Model.Cart;
 import rmit.ad.snaptweet.Prevalent.CartViewHolder;
 import rmit.ad.snaptweet.Prevalent.Prevalent;
 import rmit.ad.snaptweet.R;
-import rmit.firebase.ui.database.FirebaseRecyclerAdapter;
+
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -95,7 +97,7 @@ public class CartActivity extends AppCompatActivity{
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 if (i==0){
-                                    Intent intent = new Intent(CartActivity.this,ProductDetailsActivity.class);
+                                    Intent intent = new Intent(CartActivity.this,CartActivity.class);
                                     intent.putExtra("pid", model.getPid());
                                     startActivity(intent);
                                 }
@@ -110,7 +112,7 @@ public class CartActivity extends AppCompatActivity{
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()){
                                                         Toast.makeText(CartActivity.this,"Item removed Successfully.",Toast.LENGTH_SHORT).show();
-                                                        Intent intent = new Intent(CartActivity.this,HomeActivity.class);
+                                                        Intent intent = new Intent(CartActivity.this,ProductDetailsActivity.class);
                                                         startActivity(intent);
                                                     }
                                                 }
