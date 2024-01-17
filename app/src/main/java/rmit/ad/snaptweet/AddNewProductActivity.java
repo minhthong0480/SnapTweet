@@ -54,30 +54,18 @@ public class AddNewProductActivity extends AppCompatActivity {
         ProductsRef = FirebaseDatabase.getInstance().getReference().child("Products");
 
 
-        Button addNewProductButton = (Button) findViewById(R.id.add_new_product);
-        InputProductImage = (ImageView) findViewById(R.id.select_product_image);
-        InputProductName = (EditText) findViewById(R.id.product_name);
-        InputProductDescription = (EditText) findViewById(R.id.product_description);
-        InputProductPrice = (EditText) findViewById(R.id.product_price);
+        Button addNewProductButton = findViewById(R.id.add_new_product);
+        InputProductImage = findViewById(R.id.select_product_image);
+        InputProductName = findViewById(R.id.product_name);
+        InputProductDescription = findViewById(R.id.product_description);
+        InputProductPrice = findViewById(R.id.product_price);
         loadingBar = new ProgressDialog(this);
 
 
-        InputProductImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                OpenGallery();
-            }
-        });
+        InputProductImage.setOnClickListener(view -> OpenGallery());
 
 
-        addNewProductButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                ValidateProductData();
-            }
-        });
+        addNewProductButton.setOnClickListener(view -> ValidateProductData());
     }
 
 
