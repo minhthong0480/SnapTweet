@@ -193,7 +193,7 @@ public class AddNewProductActivity extends AppCompatActivity {
                     {
                         if (task.isSuccessful())
                         {
-                            Intent intent = new Intent(AddNewProductActivity.this, ProductDetailsActivity.class);
+                            Intent intent = new Intent(AddNewProductActivity.this,OrderActivity.class);
                             startActivity(intent);
 
                             loadingBar.dismiss();

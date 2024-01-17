@@ -26,7 +26,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
 
         checkOrdersBtn.setOnClickListener(view -> {
-            Intent intent= new Intent(ProductDetailsActivity.this,ProductDetailsActivity.class);
+            Intent intent= new Intent(ProductDetailsActivity.this,AddNewProductActivity.class);
             startActivity(intent);
         });
 
@@ -48,19 +48,19 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
 
         tShirts.setOnClickListener(view -> {
-            Intent intent = new Intent(ProductDetailsActivity.this, ProductDetailsActivity.class);
+            Intent intent = new Intent(ProductDetailsActivity.this, AddNewProductActivity.class);
             intent.putExtra("category", "tShirts");
             startActivity(intent);
         });
         sportsTShirts.setOnClickListener(view -> {
-            Intent intent = new Intent(ProductDetailsActivity.this, ProductDetailsActivity.class);
+            Intent intent = new Intent(ProductDetailsActivity.this, AddNewProductActivity.class);
             intent.putExtra("category", "Sports tShirts");
             startActivity(intent);
         });
 
 
         femaleDresses.setOnClickListener(view -> {
-            Intent intent = new Intent(ProductDetailsActivity.this, ProductDetailsActivity.class);
+            Intent intent = new Intent(ProductDetailsActivity.this, AddNewProductActivity.class);
             intent.putExtra("category", "Female Dresses");
             startActivity(intent);
         });
@@ -70,7 +70,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent(ProductDetailsActivity.this, ProductDetailsActivity.class);
+                Intent intent = new Intent(ProductDetailsActivity.this, AddNewProductActivity.class);
                 intent.putExtra("category", "Sweathers");
                 startActivity(intent);
             }
@@ -81,7 +81,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent(ProductDetailsActivity.this, ProductDetailsActivity.class);
+                Intent intent = new Intent(ProductDetailsActivity.this, AddNewProductActivity.class);
                 intent.putExtra("category", "Glasses");
                 startActivity(intent);
             }
@@ -92,7 +92,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent(ProductDetailsActivity.this, ProductDetailsActivity.class);
+                Intent intent = new Intent(ProductDetailsActivity.this, AddNewProductActivity.class);
                 intent.putExtra("category", "Hats Caps");
                 startActivity(intent);
             }
@@ -104,7 +104,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent(ProductDetailsActivity.this, ProductDetailsActivity.class);
+                Intent intent = new Intent(ProductDetailsActivity.this, ddNewProductActivity.class);
                 intent.putExtra("category", "Wallets Bags Purses");
                 startActivity(intent);
             }
@@ -115,7 +115,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent(ProductDetailsActivity.this, AddNewProductActivity.class);
+                Intent intent = new Intent(ProductDetailsActivity.this, ddNewProductActivity.class);
                 intent.putExtra("category", "Shoes");
                 startActivity(intent);
             }
