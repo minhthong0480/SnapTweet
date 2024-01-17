@@ -32,8 +32,8 @@ import java.util.Objects;
 
 public class AddNewProductActivity extends AppCompatActivity {
     private String CategoryName, Description, Price, Pname, saveCurrentDate, saveCurrentTime;
-    private ImageView InputProductImage;
-    private EditText InputProductName, InputProductDescription, InputProductPrice;
+    public ImageView InputProductImage;
+    public EditText InputProductName, InputProductDescription, InputProductPrice;
     private static final int GalleryPick = 1;
     private Uri ImageUri;
     private String productRandomKey, downloadImageUrl;
@@ -195,6 +195,7 @@ public class AddNewProductActivity extends AppCompatActivity {
                         {
                             Intent intent = new Intent(AddNewProductActivity.this, OrderActivity.class);
                             startActivity(intent);
+
 
                             loadingBar.dismiss();
                             Toast.makeText(AddNewProductActivity.this, "Product is added successfully..", Toast.LENGTH_SHORT).show();
