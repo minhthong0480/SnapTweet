@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Add this in res/values/arrays.xml file -->
+    <string-array name="sorting_options_array">
+        <item>Username Ascending</item>
+        <item>FullName Ascending</item>
+
+    </string-array>
+
+</resources>
+

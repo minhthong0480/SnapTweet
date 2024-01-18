@@ -15,7 +15,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,6 +31,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import rmit.ad.snaptweet.Adapter.UserAdapter;
@@ -57,6 +62,35 @@ public class SearchFragment extends Fragment {
         recyclerView.setAdapter(userAdapter);
 
         readUsers();
+
+        // Inside onCreateView method
+        Spinner sortingSpinner = view.findViewById(R.id.sorting_spinner);
+
+// Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(requireContext(),
+                R.array.sorting_options_array, android.R.layout.simple_spinner_item);
+
+// Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+// Apply the adapter to the spinner
+        sortingSpinner.setAdapter(adapter);
+
+// Set a listener to handle sorting selection
+        sortingSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                String selectedSorting = adapterView.getItemAtPosition(position).toString();
+                // Call a method to apply sorting based on selectedSorting
+                applySorting(selectedSorting);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                // Do nothing here
+            }
+        });
+
         search_bar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -124,4 +158,30 @@ public class SearchFragment extends Fragment {
             }
         });
     }
+
+    private void applySorting(String sortingCriteria) {
+
+        // For example, sorting by username in ascending order
+        if ("Username Ascending".equals(sortingCriteria)) {
+            Collections.sort(mUsers, new Comparator<User>() {
+                @Override
+                public int compare(User user1, User user2) {
+                    return user1.getUsername().compareToIgnoreCase(user2.getUsername());
+                }
+            });
+        }
+
+        if("FullName Ascending".equals(sortingCriteria)){
+            Collections.sort(mUsers, new Comparator<User>() {
+                @Override
+                public int compare(User user1, User user2) {
+                    return user1.getFullname().compareToIgnoreCase(user2.getFullname());
+                }
+            });
+        }
+
+        // Update the adapter after sorting
+        userAdapter.notifyDataSetChanged();
+    }
+
 }
