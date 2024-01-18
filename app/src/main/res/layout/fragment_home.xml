@@ -17,6 +17,7 @@
             android:layout_marginTop="20dp"
             android:background="?android:attr/windowBackground">
 
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -28,27 +29,27 @@
                     android:layout_marginLeft="-20dp"
                     android:src="@drawable/logo_rmit" />
 
-                <!-- Uncomment the lines below if you want to add an icon to the right side of the Toolbar -->
-                <!--
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_inbox"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="16dp"/>
-                -->
 
             </RelativeLayout>
 
         </androidx.appcompat.widget.Toolbar>
 
+
     </com.google.android.material.appbar.AppBarLayout>
+
+    <EditText
+        android:id="@+id/user_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bar"
+        android:hint="Filter by User"/>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/bar"
+        android:layout_below="@+id/user_filter"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"/>
 

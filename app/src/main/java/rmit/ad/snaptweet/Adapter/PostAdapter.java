@@ -261,4 +261,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             }
         });
     }
+
+    public void filterList(List<PostModel> filteredPosts) {
+        mPost = filteredPosts;
+        notifyDataSetChanged();
+    }
 }

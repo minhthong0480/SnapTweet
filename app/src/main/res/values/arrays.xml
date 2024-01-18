@@ -2,8 +2,8 @@
 <resources>
     <!-- Add this in res/values/arrays.xml file -->
     <string-array name="sorting_options_array">
-        <item>Username Ascending</item>
-        <item>FullName Ascending</item>
+        <item>Username Asc</item>
+        <item>FullName Asc</item>
 
     </string-array>
 

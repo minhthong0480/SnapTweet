@@ -2,10 +2,13 @@ package rmit.ad.snaptweet.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -54,9 +57,35 @@ public class HomeFragment extends Fragment {
 
         checkFollowing();
 
+        EditText userFilter = view.findViewById(R.id.user_filter);
+
+        userFilter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                filterByUser(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
         return view;
     }
 
+    private void filterByUser(String username) {
+        List<PostModel> filteredPosts = new ArrayList<>();
+
+        for (PostModel post : postLists) {
+            if (post.getPublisher().toLowerCase().contains(username.toLowerCase())) {
+                filteredPosts.add(post);
+            }
+        }
+
+        postAdapter.filterList(filteredPosts);
+    }
     private void checkFollowing(){
         followingList = new ArrayList<>();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Follow")
