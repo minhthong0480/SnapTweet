@@ -174,8 +174,7 @@ public class AddNewProductActivity extends AppCompatActivity {
         });
 
     }
-    private void SaveProductInfoToDatabase()
-    {
+    private void SaveProductInfoToDatabase() {
         HashMap<String, Object> productMap = new HashMap<>();
         productMap.put("pid", productRandomKey);
         productMap.put("date", saveCurrentDate);
@@ -186,27 +185,25 @@ public class AddNewProductActivity extends AppCompatActivity {
         productMap.put("price", Price);
         productMap.put("pname", Pname);
 
+
         ProductsRef.child(productRandomKey).updateChildren(productMap)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task)
-                    {
-                        if (task.isSuccessful())
-                        {
-                            Intent intent = new Intent(AddNewProductActivity.this, OrderActivity.class);
-                            startActivity(intent);
+                .addOnCompleteListener(task -> {
+                    loadingBar.dismiss(); // Dismiss the loading bar first
 
+                    if (task.isSuccessful()) {
+                        Intent intent = new Intent(AddNewProductActivity.this, NewOrderActivity.class);
+                        intent.putExtra("pname", Pname);
+                        intent.putExtra("description", Description);
+                        intent.putExtra("price", Price);
+                        intent.putExtra("image", downloadImageUrl); // Pass the image URL
+                        startActivity(intent);
 
-                            loadingBar.dismiss();
-                            Toast.makeText(AddNewProductActivity.this, "Product is added successfully..", Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                        {
-                            loadingBar.dismiss();
-                            String message = task.getException().toString();
-                            Toast.makeText(AddNewProductActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
-                        }
+                        Toast.makeText(AddNewProductActivity.this, "Product is added successfully..", Toast.LENGTH_SHORT).show();
+                    } else {
+                        String message = task.getException().toString();
+                        Toast.makeText(AddNewProductActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
                     }
                 });
     }
+
 }

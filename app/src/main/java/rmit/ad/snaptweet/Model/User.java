@@ -1,6 +1,8 @@
 package rmit.ad.snaptweet.Model;
 
 public class User {
+
+
     private String id;
     private String userId;
     private String username;

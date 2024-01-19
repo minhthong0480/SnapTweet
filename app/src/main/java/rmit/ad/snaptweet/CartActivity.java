@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import rmit.ad.snaptweet.Model.Cart;
 import rmit.ad.snaptweet.Prevalent.CartViewHolder;
 import rmit.ad.snaptweet.Prevalent.Prevalent;
-import rmit.ad.snaptweet.R;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -72,7 +71,7 @@ public class CartActivity extends AppCompatActivity{
         FirebaseRecyclerOptions<Cart> options =
                 new FirebaseRecyclerOptions.Builder<Cart>()
                         .setQuery(cartListRef.child("User view")
-                                .child(Prevalent.currentOnlineUser.getPhone()).child("Products"),Cart.class).build();
+                                .child(Prevalent.currentOnlineUser.getUsername()).child("Products"),Cart.class).build();
         FirebaseRecyclerAdapter<Cart, CartViewHolder> adapter
                 = new FirebaseRecyclerAdapter<Cart, CartViewHolder>(options) {
             @Override
@@ -97,13 +96,13 @@ public class CartActivity extends AppCompatActivity{
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 if (i==0){
-                                    Intent intent = new Intent(CartActivity.this,CartActivity.class);
+                                    Intent intent = new Intent(CartActivity.this,ConfirmFinalOrderActivity.class);
                                     intent.putExtra("pid", model.getPid());
                                     startActivity(intent);
                                 }
                                 if (i==1){
                                     cartListRef.child("User view")
-                                            .child(Prevalent.currentOnlineUser.getPhone())
+                                            .child(Prevalent.currentOnlineUser.getUsername())
                                             .child("Products")
                                             .child(model.getPid())
                                             .removeValue()
@@ -139,7 +138,7 @@ public class CartActivity extends AppCompatActivity{
     private void CheckOrderState()
     {
         DatabaseReference ordersRef;
-        ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentOnlineUser.getPhone());
+        ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentOnlineUser.getUsername());
         ordersRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
