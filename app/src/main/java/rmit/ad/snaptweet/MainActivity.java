@@ -1,5 +1,6 @@
 package rmit.ad.snaptweet;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,11 +31,30 @@ public class MainActivity extends AppCompatActivity {
     Fragment selectFragment = null;
     Button logoutButton;
     ImageButton logoutBtn;
+    Button openOtherAppButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Button openOtherAppButton = findViewById(R.id.open_other_app);
+        openOtherAppButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v.getId() == R.id.open_other_app) {
+                    Intent i = new Intent();
+                    i.setAction(Intent.ACTION_VIEW);
+                    // Set the package name and the full activity name
+                    i.setClassName("com.example.chatapp", "com.example.chatapp.SplashActivity");
+                    try {
+                        startActivity(i);
+                    } catch (ActivityNotFoundException e) {
+                        // Handle the case where the target app is not installed
+                        Toast.makeText(MainActivity.this, "App not installed", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectListener);
