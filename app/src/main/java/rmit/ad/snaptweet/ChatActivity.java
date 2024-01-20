@@ -81,13 +81,9 @@ public class ChatActivity extends AppCompatActivity {
         private ArrayList<Fragment> fragments;
         private ArrayList<String> titles;
         public ViewPageAdapter(@NonNull FragmentManager fm) {
-            super(fm);
+            super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
             this.fragments = new ArrayList<>();
             this.titles = new ArrayList<>();
-        }
-
-        public ViewPageAdapter(@NonNull FragmentManager fm, int behavior) {
-            super(fm, behavior);
         }
 
         @NonNull

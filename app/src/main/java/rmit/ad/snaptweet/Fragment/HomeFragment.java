@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,13 +29,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rmit.ad.snaptweet.Adapter.PostAdapter;
+import rmit.ad.snaptweet.ChatActivity;
+import rmit.ad.snaptweet.MainActivity;
 import rmit.ad.snaptweet.Model.PostModel;
+import rmit.ad.snaptweet.PostActivity;
 import rmit.ad.snaptweet.R;
 
 public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private PostAdapter postAdapter;
     private List<PostModel> postLists;
+    Button chatButton;
 
     private List<String> followingList;
     String currentUserId;
@@ -54,6 +59,16 @@ public class HomeFragment extends Fragment {
         currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         postAdapter = new PostAdapter(getContext(), postLists, currentUserId);
         recyclerView.setAdapter(postAdapter);
+        chatButton = view.findViewById(R.id.chat_button);
+
+        chatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent chatIntent = new Intent(getContext(), ChatActivity.class);
+                startActivity(chatIntent);
+            }
+        });
+
 
         checkFollowing();
 
@@ -73,6 +88,7 @@ public class HomeFragment extends Fragment {
         });
 
         return view;
+
     }
 
     private void filterByUser(String username) {

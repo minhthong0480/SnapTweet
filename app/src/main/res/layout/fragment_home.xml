@@ -41,16 +41,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/bar"
-        android:hint="Filter by User"/>
+        android:hint="Filter by User"
+        android:minHeight="48dp" />
+
+    <Button
+        android:id="@+id/chat_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_filter"
+        android:layout_marginTop="8dp"
+        android:text="SnapChat"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/user_filter"
+        android:layout_below="@+id/chat_button"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"/>
-
-
 
 </RelativeLayout>
