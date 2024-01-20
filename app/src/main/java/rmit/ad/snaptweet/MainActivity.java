@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectListener);
 
         Bundle intent = getIntent().getExtras();
-        if(intent != null){
+        if (intent != null) {
             String publisher = intent.getString("publisherid");
 
             SharedPreferences.Editor editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
@@ -53,15 +53,10 @@ public class MainActivity extends AppCompatActivity {
                     new HomeFragment()).commit();
         }
 
-
-
-
         // Set the default fragment when the activity is created
         selectFragment = new HomeFragment();
         loadFragment();
     }
-
-
 
     private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {

@@ -17,7 +17,6 @@
             android:layout_marginTop="20dp"
             android:background="?android:attr/windowBackground">
 
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -29,11 +28,11 @@
                     android:layout_marginLeft="-20dp"
                     android:src="@drawable/logo_rmit" />
 
+                <!-- Button at the right corner above Toolbar -->
 
             </RelativeLayout>
 
         </androidx.appcompat.widget.Toolbar>
-
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -44,7 +43,6 @@
         android:layout_below="@id/bar"
         android:hint="Filter by User"/>
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
@@ -52,5 +50,7 @@
         android:layout_below="@+id/user_filter"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"/>
+
+
 
 </RelativeLayout>

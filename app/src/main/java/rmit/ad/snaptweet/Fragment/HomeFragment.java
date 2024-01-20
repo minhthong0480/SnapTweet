@@ -79,13 +79,31 @@ public class HomeFragment extends Fragment {
         List<PostModel> filteredPosts = new ArrayList<>();
 
         for (PostModel post : postLists) {
-            if (post.getPublisher().toLowerCase().contains(username.toLowerCase())) {
-                filteredPosts.add(post);
-            }
-        }
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users")
+                    .child(post.getPublisher());
 
-        postAdapter.filterList(filteredPosts);
+            userRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        String publisherUsername = dataSnapshot.child("username").getValue(String.class);
+
+                        // Check if the publisher's username contains the input text
+                        if (publisherUsername != null && publisherUsername.toLowerCase().contains(username.toLowerCase())) {
+                            filteredPosts.add(post);
+                            postAdapter.filterList(filteredPosts);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    // Handle errors
+                }
+            });
+        }
     }
+
     private void checkFollowing(){
         followingList = new ArrayList<>();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Follow")

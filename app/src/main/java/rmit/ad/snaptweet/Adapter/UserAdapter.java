@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,6 +39,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
         this.mUsers = mUser;
     }
 
+//    public class ViewHolder extends RecyclerView.ViewHolder{
+//        public TextView username;
+//        public ImageView profile_image;
+//
+//        public ViewHolder(View itemView){
+//            super(itemView);
+//
+//            username = itemView.findViewById(R.id.username);
+//            profile_image = itemView.findViewById(R.id.image_profile);
+//        }
+//    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -55,7 +68,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
 
         viewHolder.username.setText(user.getUsername());
         viewHolder.fullname.setText(user.getFullname());
-        Glide.with(mContext).load(user.getImageurl()).into(viewHolder.image_profile);
+        if(user.getImageurl().equals("default")){
+            viewHolder.image_profile.setImageResource(R.mipmap.ic_launcher);
+        } else{
+            Glide.with(mContext).load(user.getImageurl()).into(viewHolder.image_profile);
+        }
         isFollowing(user.getId(), viewHolder.btn_follow);
 
         if(user.getId().equals(firebaseUser.getUid())){

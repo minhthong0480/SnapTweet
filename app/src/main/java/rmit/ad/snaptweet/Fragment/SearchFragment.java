@@ -162,7 +162,7 @@ public class SearchFragment extends Fragment {
     private void applySorting(String sortingCriteria) {
 
         // For example, sorting by username in ascending order
-        if ("Username Ascending".equals(sortingCriteria)) {
+        if ("Username Asc".equals(sortingCriteria)) {
             Collections.sort(mUsers, new Comparator<User>() {
                 @Override
                 public int compare(User user1, User user2) {
@@ -171,7 +171,7 @@ public class SearchFragment extends Fragment {
             });
         }
 
-        if("FullName Ascending".equals(sortingCriteria)){
+        if("FullName Asc".equals(sortingCriteria)){
             Collections.sort(mUsers, new Comparator<User>() {
                 @Override
                 public int compare(User user1, User user2) {
