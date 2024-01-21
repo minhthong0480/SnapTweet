@@ -17,12 +17,41 @@
         android:theme="@style/Theme.SnapTweet"
         tools:targetApi="31">
         <activity
+
             android:name=".MessageActivity"
             android:exported="false"
             android:theme="@style/CommentActivityTheme" />
 
         <activity
             android:name=".ChatActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".PlaceOrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MarketRegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MarketLoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminMarketActivity"
+            android:exported="false" />
+        <activity
+            android:name=".NewOrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ConfirmFinalOrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CartActivity"
             android:exported="false" />
         <activity
             android:name=".EditProfileActivity"
@@ -31,6 +60,12 @@
             android:name=".CommentActivity"
             android:exported="false"
             android:theme="@style/CommentActivityTheme" />
+        <activity
+            android:name=".AddNewProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProductDetailsActivity"
+            android:exported="false" />
         <activity
             android:name=".StartActivity"
             android:exported="true">
