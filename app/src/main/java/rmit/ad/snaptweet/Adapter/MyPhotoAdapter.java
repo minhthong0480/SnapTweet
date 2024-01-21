@@ -39,7 +39,7 @@ public class MyPhotoAdapter extends RecyclerView.Adapter<MyPhotoAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        PostModel post = mPosts.get(position);
+        final PostModel post = mPosts.get(position);
 
         Glide.with(context).load(post.getPostimage()).into(holder.post_image);
 
