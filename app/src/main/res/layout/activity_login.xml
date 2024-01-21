@@ -44,6 +44,14 @@
         android:background="@drawable/button_background"
         android:layout_marginTop="15dp"/>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/loginGoogle"
+        android:text="Log In With Google"
+        android:background="@drawable/button_background"
+        android:layout_marginTop="15dp" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

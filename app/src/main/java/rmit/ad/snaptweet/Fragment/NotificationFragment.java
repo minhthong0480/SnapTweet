@@ -45,6 +45,7 @@ public class NotificationFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         notificationList = new ArrayList<>();
         notificationAdapter = new NotificationAdapter(getContext(), notificationList);
+        recyclerView.setAdapter(notificationAdapter);
 
         readNotifications();
 

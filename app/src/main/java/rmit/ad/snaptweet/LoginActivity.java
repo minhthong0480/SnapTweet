@@ -1,6 +1,7 @@
 package rmit.ad.snaptweet;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -13,6 +14,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -23,12 +28,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import rmit.ad.snaptweet.Auth.AuthListener;
+import rmit.ad.snaptweet.Auth.GoogleAuth;
+import rmit.ad.snaptweet.Model.User;
+
 public class LoginActivity extends AppCompatActivity {
 
     EditText email, password;
-    Button login;
+    Button login, loginGoogle;
     TextView txt_signup;
     FirebaseAuth auth;
+    FirebaseDatabase database;
+    GoogleAuth googleAuth;
 
 
     @Override
@@ -39,9 +50,11 @@ public class LoginActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         login = findViewById(R.id.login);
+        loginGoogle = findViewById(R.id.loginGoogle);
         txt_signup = findViewById(R.id.txt_signup);
 
         auth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
 
         txt_signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +62,13 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class ));
             }
         });
+
+        /*loginGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                auth();
+            }
+        });*/
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,4 +117,32 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
+    /*@Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        googleAuth.activityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onStart() {
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if (account != null) {
+            auth();
+        }
+        super.onStart();
+    }
+
+    private void auth() {
+        googleAuth = new GoogleAuth(LoginActivity.this, new AuthListener() {
+            @Override
+            public void OnAuthentication(User user) {
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+    }*/
 }
