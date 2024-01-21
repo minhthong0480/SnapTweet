@@ -3,19 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#808080"
-    tools:context=".Fragment.ChatFragment">
+    tools:context=".Fragment.NotificationFragment">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/bar"
         android:background="?android:attr/windowBackground">
 
         <Toolbar
-            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/toolbar"
             android:background="?android:attr/windowBackground">
 
             <RelativeLayout
@@ -28,7 +27,7 @@
                     android:text="Notifications"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark" />
+                    android:textColor="@color/colorPrimaryDark"/>
 
             </RelativeLayout>
 
@@ -37,9 +36,11 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/bar" />
+        android:layout_height="wrap_content"
+        android:id="@+id/recycler_view"
+        android:layout_below="@id/bar">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </RelativeLayout>
