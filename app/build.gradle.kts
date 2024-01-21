@@ -51,6 +51,17 @@ dependencies {
     implementation ("com.squareup.picasso:picasso:2.71828")
     implementation ("com.firebaseui:firebase-ui-database:8.0.0")
 
+    implementation ("com.github.rey5137:material:1.3.1")
+
+
+    implementation ("io.github.pilgr:paperdb:2.7.2")
+
+    //noinspection GradleCompatible
+
+
+
+
+
 //    implementation ("com.cepheuen.elegant-number-button:library:2.0.0")
 
 

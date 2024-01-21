@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- ImageView for ordered product image -->
+    <ImageView
+        android:id="@+id/ordered_product_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:layout_centerHorizontal="true"/>
+
+    <!-- TextView for ordered product name -->
+    <TextView
+        android:id="@+id/ordered_product_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ordered_product_image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text=""
+        android:textSize="18sp"/>
+
+    <!-- TextView for ordered product price -->
+    <TextView
+        android:id="@+id/ordered_product_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ordered_product_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text=""
+        android:textSize="18sp"/>
+
+    <!-- TextView for quantity -->
+    <TextView
+        android:id="@+id/quantity_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ordered_product_price"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text=""
+        android:textSize="18sp"/>
+
+    <!-- TextView for total price -->
+    <TextView
+        android:id="@+id/total_price_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/quantity_text_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text=""
+        android:textSize="18sp"/>
+
+    <!-- Button for increasing quantity -->
+    <Button
+        android:id="@+id/plus_button"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_below="@id/total_price_text_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="+"/>
+
+    <!-- Button for decreasing quantity -->
+    <Button
+        android:id="@+id/minus_button"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_below="@id/total_price_text_view"
+        android:layout_toLeftOf="@id/plus_button"
+        android:layout_marginTop="16dp"
+        android:text="-"/>
+
+    <!-- Button for confirming order -->
+    <Button
+        android:id="@+id/confirm_order_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/plus_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Confirm Order"/>
+</RelativeLayout>

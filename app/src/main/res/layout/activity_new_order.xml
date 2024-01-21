@@ -19,7 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"/>
-
     </FrameLayout>
 
     <!-- Text views with white boxes and black outlines -->
@@ -83,5 +82,16 @@
             android:outlineSpotShadowColor="@android:color/black"
             android:outlineAmbientShadowColor="@android:color/black"
             android:outlineProvider="background"/>
+        <Button
+            android:id="@+id/order_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Order"
+            android:layout_below="@id/order_product_price"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp" />
     </LinearLayout>
+
+    <!-- Add a small button called "Order" -->
+
 </RelativeLayout>

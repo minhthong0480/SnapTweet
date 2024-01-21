@@ -1,16 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProductDetailsActivity">
-
     <ImageView
         android:id="@+id/product_image_details"
         android:layout_width="match_parent"
         android:layout_height="260dp"
-        android:scaleType="centerCrop" />
-
+        android:scaleType="centerCrop"
+        />
     <TextView
         android:id="@+id/product_name_details"
         android:layout_width="match_parent"
@@ -21,8 +21,8 @@
         android:textStyle="bold"
         android:textSize="20dp"
         android:gravity="center"
-        android:layout_marginTop="10dp" />
-
+        android:layout_marginTop="10dp"
+        />
     <TextView
         android:id="@+id/product_description_details"
         android:layout_width="match_parent"
@@ -33,8 +33,8 @@
         android:textStyle="bold"
         android:textSize="20dp"
         android:gravity="center"
-        android:layout_marginTop="10dp" />
-
+        android:layout_marginTop="10dp"
+        />
     <TextView
         android:id="@+id/product_price_details"
         android:layout_width="match_parent"
@@ -45,19 +45,9 @@
         android:textStyle="bold"
         android:textSize="20dp"
         android:gravity="center"
-        android:layout_marginTop="10dp" />
-
-    <!-- Replace ElegantNumberButton with EditText for quantity input -->
-    <EditText
-        android:id="@+id/quantity_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:textSize="16sp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/product_price_details"
         android:layout_marginTop="10dp"
-        android:hint="Quantity" />
+        />
+
 
     <Button
         android:id="@+id/pd_add_to_cart_button"
@@ -68,5 +58,18 @@
         android:layout_alignParentBottom="true"
         android:text="Add to Cart"
         android:textColor="@android:color/white"
-        android:textSize="18dp" />
+        android:textSize="18dp"
+        />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/quantity_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Quantity">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/quantity_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
 </RelativeLayout>
