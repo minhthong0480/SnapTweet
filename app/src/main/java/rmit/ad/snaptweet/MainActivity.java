@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import rmit.ad.snaptweet.Fragment.HomeFragment;
 import rmit.ad.snaptweet.Fragment.MarketFragment;
+import rmit.ad.snaptweet.Fragment.NotificationFragment;
 import rmit.ad.snaptweet.Fragment.ProfileFragment;
 import rmit.ad.snaptweet.Fragment.SearchFragment;
 
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     Fragment selectFragment = null;
     Button logoutButton;
-    ImageButton logoutBtn;
+    ImageButton showNotifications;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectListener);
+        showNotifications = findViewById(R.id.showNoti);
 
         Bundle intent = getIntent().getExtras();
         if (intent != null) {
@@ -52,6 +54,15 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new HomeFragment()).commit();
         }
+
+
+        showNotifications.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectFragment = new NotificationFragment();
+                loadFragment();
+            }
+        });
 
         // Set the default fragment when the activity is created
         selectFragment = new HomeFragment();
