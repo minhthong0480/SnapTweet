@@ -22,4 +22,10 @@
         <item name="windowNoTitle">true</item>
         <!-- Add any other specific style attributes for PostActivity -->
     </style>
+
+    <style name="MessageActivityTheme" parent="Theme.SnapTweet">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Add any other specific style attributes for PostActivity -->
+    </style>
 </resources>

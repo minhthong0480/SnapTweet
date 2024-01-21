@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragment.SearchFragment">
+    android:background="#e6e6e6"
+    tools:context=".MessageActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/bar"
+        android:id="@+id/bar_layout"
         android:background="?android:attr/windowBackground">
 
         <androidx.appcompat.widget.Toolbar
@@ -17,13 +18,6 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?android:attr/windowBackground"
             android:id="@+id/toolbar">
-
-            <ImageView
-                android:id="@+id/back_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:src="@drawable/ic_back_button"/>
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/image_profile"
@@ -45,27 +39,47 @@
                     android:text="Username"
                     android:maxLines="1"
                     android:textStyle="bold"
-                    android:layout_marginStart="10dp"
                     android:textColor="@color/black"/>
+
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 
-        <com.google.android.material.tabs.TabLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tab_layout"
-            android:background="@color/colorPrimaryDark"
-            app:tabSelectedTextColor="#fff"
-            app:tabIndicatorColor="#fff"
-            app:tabTextColor="#fff"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recycler_view"
+        android:layout_below="@id/bar_layout" />
 
-
-    <androidx.viewpager.widget.ViewPager
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/view_pager"/>
+        android:padding="5dp"
+        android:background="#fff"
+        android:layout_alignParentBottom="true">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_send"
+            android:background="@android:color/transparent"
+            android:hint="Type Message"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/btn_send"/>
+
+        <ImageButton
+            android:id="@+id/btn_send"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_send"
+            android:background="@android:color/transparent"
+            tools:ignore="TouchTargetSizeCheck" />
+            
+            
+    </RelativeLayout>
 
 </RelativeLayout>

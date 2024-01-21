@@ -1,6 +1,7 @@
 package rmit.ad.snaptweet.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import rmit.ad.snaptweet.Fragment.ProfileFragment;
+import rmit.ad.snaptweet.MessageActivity;
 import rmit.ad.snaptweet.Model.User;
 import rmit.ad.snaptweet.R;
 
@@ -39,17 +41,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
         this.mUsers = mUser;
     }
 
-//    public class ViewHolder extends RecyclerView.ViewHolder{
-//        public TextView username;
-//        public ImageView profile_image;
-//
-//        public ViewHolder(View itemView){
-//            super(itemView);
-//
-//            username = itemView.findViewById(R.id.username);
-//            profile_image = itemView.findViewById(R.id.image_profile);
-//        }
-//    }
 
     @NonNull
     @Override
@@ -73,6 +64,16 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
         } else{
             Glide.with(mContext).load(user.getImageurl()).into(viewHolder.image_profile);
         }
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, MessageActivity.class);
+                intent.putExtra("userid", user.getId());
+                mContext.startActivity(intent);
+            }
+        });
+
         isFollowing(user.getId(), viewHolder.btn_follow);
 
         if(user.getId().equals(firebaseUser.getUid())){
