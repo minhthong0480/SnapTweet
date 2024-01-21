@@ -66,6 +66,7 @@
             android:id="@+id/text_send"
             android:background="@android:color/transparent"
             android:hint="Type Message"
+            android:layout_marginBottom="10dp"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/btn_send"/>
 
@@ -78,8 +79,8 @@
             android:src="@drawable/ic_send"
             android:background="@android:color/transparent"
             tools:ignore="TouchTargetSizeCheck" />
-            
-            
+
+
     </RelativeLayout>
 
 </RelativeLayout>

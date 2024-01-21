@@ -132,8 +132,26 @@ public class MessageActivity extends AppCompatActivity {
         reference.child("Chats").push().setValue(hashMap);
     }
 
+    // Inside your sendMessage method
+//    private void sendMessage(String sender, String receiver, String message) {
+//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chats");
+//
+//        HashMap<String, Object> hashMap = new HashMap<>();
+//        hashMap.put("sender", sender);
+//        hashMap.put("receiver", receiver);
+//        hashMap.put("message", message);
+//
+//        String messageId = reference.push().getKey();
+//        reference.child(messageId).setValue(hashMap);
+//
+//        // Update the dataset and notify the adapter
+//        mChat.add(new Chat(sender, receiver, message)); // Create a new Chat object if needed
+//
+//    }
 
-    private void readMessage(String myid, String userid, String imageurl) {
+
+
+    private void readMessage(final String myid, final String userid, final String imageurl) {
         mChat = new ArrayList<>();
 
         reference = FirebaseDatabase.getInstance().getReference("Chats");
@@ -147,11 +165,10 @@ public class MessageActivity extends AppCompatActivity {
                             chat.getReceiver().equals(userid) && chat.getSender().equals(myid)) {
                         mChat.add(chat);
                     }
+                    messageAdapter = new MessageAdapter(MessageActivity.this, mChat, imageurl);
+                    recyclerView.setAdapter(messageAdapter);
                 }
 
-                // Move setAdapter outside of the loop
-                messageAdapter = new MessageAdapter(MessageActivity.this, mChat, imageurl);
-                recyclerView.setAdapter(messageAdapter);
             }
 
             @Override
@@ -160,6 +177,7 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
     }
+
 
 
 }
