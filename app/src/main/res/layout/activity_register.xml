@@ -11,8 +11,8 @@
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:src="@drawable/logo_rmit" />
+        android:layout_height="150dp"
+        android:src="@drawable/snaptweet_logo" />
 
     <EditText
         android:layout_width="match_parent"

@@ -26,7 +26,7 @@
                     android:layout_height="70dp"
                     android:layout_alignParentStart="true"
                     android:layout_marginLeft="-20dp"
-                    android:src="@drawable/logo_rmit" />
+                    android:src="@drawable/snaptweet_logo" />
 
                 <!-- Uncomment the lines below if you want to add an icon to the right side of the Toolbar -->
                 <!--
